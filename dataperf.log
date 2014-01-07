@@ -1,23 +1,23 @@
-INVOKED: Mon Jan  6 19:09:58 CST 2014
+INVOKED: Tue Jan  7 11:36:22 CST 2014
 DIRECTORY: /Users/dcblack/Dropbox/sandbox/sc_clippings/dataperf
-COMMAND: /Users/dcblack/Dropbox/hldw/bin/qcc -O3 -sc dataperf
+COMMAND: /Users/dcblack/Dropbox/hldw/bin/qcc -O2 -sc dataperf 1e7
 COMPILER: Apple LLVM version 5.0 (clang-500.2.79) (based on LLVM 3.3svn)
 Target: x86_64-apple-darwin13.0.0
 Thread model: posix
-% clang++ -arch x86_64 -stdlib=libc++ -I . -DUSING_SYSTEMC=1 -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX -I/Users/dcblack/eda/osci/systemc/2.3-clang5.0/include -m64 -std=c++11 -pedantic -g -O3 -I. -o dataperf.x dataperf.cpp -L/Users/dcblack/eda/osci/systemc/2.3-clang5.0/lib-macosx64 -lsystemc | c++filt
+% clang++ -arch x86_64 -stdlib=libc++  -DUSING_SYSTEMC=1 -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX -I/Users/dcblack/eda/osci/systemc/2.3-clang5.0/include -m64 -std=c++11 -pedantic -g -O2 -I. -o dataperf.x dataperf.cpp -L/Users/dcblack/eda/osci/systemc/2.3-clang5.0/lib-macosx64 -lsystemc | c++filt
 
-% time ./dataperf.x 
+% time ./dataperf.sh 1e7
 
              SystemC 2.3.0-ASI --- Jan  6 2014 07:20:27
         Copyright (c) 1996-2012 by all Contributors,
         ALL RIGHTS RESERVED
 
-result=660469505
-i took 0.125028s
-result=660469505
-N5sc_dt6sc_intILi32EEE took 0.199671s
-result=inf
-d took 0.364543s
-result=660469505
-N5sc_dt8sc_fixedILi32ELi32ELNS_9sc_q_modeE5ELNS_9sc_o_modeE3ELi0EEE took 25.6714s
-       26.36 real        26.34 user         0.01 sys
+Testing int with loop_count=10000000 result=1347020161 elapsed time 0.012689s
+Testing sc_dt::sc_int<32> with loop_count=10000000 result=1347020161 elapsed time 0.027012s
+Testing sc_dt::sc_bigint<32> with loop_count=10000000 result=1347020161 elapsed time 4.712148s
+Testing double with loop_count=10000000 result=3528416000 elapsed time 0.051190s
+Testing sc_dt::sc_fixed_fast<32,32,5,3,0> with loop_count=10000000 result=1173492288 elapsed time 0.758759s
+Testing sc_dt::sc_fixed<32,32,5,3,0> with loop_count=10000000 result=1347020161 elapsed time 4.280227s
+
+Completed all tests
+       10.23 real        10.45 user         0.19 sys

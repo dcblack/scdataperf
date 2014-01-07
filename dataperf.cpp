@@ -27,6 +27,7 @@
 #include <cassert>
 #include <systemc>
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include <chrono>
 #include <ctime>
@@ -40,95 +41,71 @@ namespace {
   chrono::time_point<chrono::system_clock> start, current;
   chrono::duration<double> elapsed_seconds;
   time_t end_time;
+  size_t loop_count = 1e8;
 }
 
-void start_timer(void)
+template<typename T>
+void truncate(T& val)
 {
+  val = T(uint32_t(val)); // Truncate to 32 bits
+}
+
+template<>
+void truncate<sc_bigint<32>>(sc_bigint<32>& val)
+{
+}
+
+template<typename T>
+void dataperf(void)
+{
+  cout << "Testing " << typeid(T).name() << " with loop_count=" << loop_count << " " << flush;
+  T result =          1;
+  T A      = 1103515245; // Linear congruential constants for 32 bit pseudo-random of max length
+  T C      =      12345; // result = (A*result + C) & 0xFFFF_FFFF
+
   start = chrono::system_clock::now();
-}
-
-void report_time(const string& mesg)
-{
+  for (size_t loop=loop_count; loop!=0; --loop)
+  {
+    result = A * result + C;     // Computation
+    truncate<T>(result);
+  }
+  cout << "result=" << fixed << setprecision(0) << result << " " << flush; // Ensure compiler doesn't optimize loop out
   current = chrono::system_clock::now();
   elapsed_seconds = current - start;
   end_time = chrono::system_clock::to_time_t(current);
-  cout << mesg << " took " << elapsed_seconds.count() << "s" << endl;
+  cout << "elapsed time " << setprecision(6) << elapsed_seconds.count() << "s" << endl;
 }
 
 int sc_main(int argc, char* argv[])
 {
-  size_t loop_count = 1e8;
-  if (argc > 1) {
-    string arg(argv[1]);
-    istringstream is(arg);
-    long long int lli;
-    is >> lli;
-    loop_count = lli;
-    assert(loop_count != 0);
+  for (int i=1; i<argc; ++i) { // Process command-line
+    string arg(argv[i]);
+    if (arg.length()>1 and string("-help").find(arg) == 0) {
+      cout
+        << "SYNOPSIS\n"
+        << "  " << argv[0] << " [LOOP_COUNT]\n"
+        << "EXAMPLES\n"
+        << "  " << argv[0] << "1e7\n"
+        << endl
+        ;
+      return 0;
+    } else if (arg.find_first_not_of("0123456789e") == string::npos) {
+      istringstream is(arg);
+      double d;
+      is >> d;
+      loop_count = d;
+      assert(loop_count != 0);
+    }//endif
   }
 
-  {
-    using data_t = int32_t;
-    data_t result = 1;
-    data_t A = 1103515245;
-    data_t C = 12345;
+  dataperf<int32_t>();
+  dataperf<sc_int<32>>();
+  dataperf<sc_bigint<32>>();
+  dataperf<double>();
+  dataperf<sc_fixed_fast<32,32>>();
+  dataperf<sc_fixed<32,32>>();
 
-    start_timer();
-    for (size_t loop=loop_count; loop!=0; --loop)
-    {
-      result = A * result + C;
-    }
-    cout << "result=" << result << endl; // Ensure compiler doesn't optimize loop out
-    report_time(typeid(data_t).name());
-  }
-
-  {
-    using data_t = sc_int<32>;
-    data_t result = 1;
-    data_t A = 1103515245;
-    data_t C = 12345;
-
-    start_timer();
-    for (size_t loop=loop_count; loop!=0; --loop)
-    {
-      result = A * result + C;
-    }
-    cout << "result=" << result << endl; // Ensure compiler doesn't optimize loop out
-    report_time(typeid(data_t).name());
-  }
-
-  {
-    using data_t = double;
-    data_t result = 1;
-    data_t A = 1103515245;
-    data_t C = 12345;
-    data_t B = 1LL<<32;
-
-    start_timer();
-    for (size_t loop=loop_count; loop!=0; --loop)
-    {
-      result = A * result + C;
-      if (result >= B) result -= B;
-    }
-    cout << "result=" << result << endl; // Ensure compiler doesn't optimize loop out
-    report_time(typeid(data_t).name());
-  }
-
-  {
-    using data_t = sc_fixed<32,32>;
-    data_t result = 1;
-    data_t A = 1103515245;
-    data_t C = 12345;
-
-    start_timer();
-    for (size_t loop=loop_count; loop!=0; --loop)
-    {
-      result = A * result + C;
-    }
-    cout << "result=" << result << endl; // Ensure compiler doesn't optimize loop out
-    report_time(typeid(data_t).name());
-  }
-
+  cout << "\nCompleted all tests" << endl;
   return 0;
 }
 

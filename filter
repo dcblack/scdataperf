@@ -1,0 +1,3 @@
+#!/bin/bash
+
+c++filt | perl -pe 's/[(]sc_dt::sc_\w_mode[)]//g;s/, +/,/g;'
