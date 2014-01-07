@@ -1,10 +1,10 @@
 INVOKED: Mon Jan  6 19:09:58 CST 2014
 DIRECTORY: /Users/dcblack/Dropbox/sandbox/sc_clippings/dataperf
-COMMAND: /Users/dcblack/Dropbox/hldw/bin/qcc -O3 -sc -I../../cxx11/include dataperf
+COMMAND: /Users/dcblack/Dropbox/hldw/bin/qcc -O3 -sc dataperf
 COMPILER: Apple LLVM version 5.0 (clang-500.2.79) (based on LLVM 3.3svn)
 Target: x86_64-apple-darwin13.0.0
 Thread model: posix
-% clang++ -arch x86_64 -stdlib=libc++ -I-I../../cxx11/include  -I../../cxx11/include -DUSING_SYSTEMC=1 -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX -I/Users/dcblack/eda/osci/systemc/2.3-clang5.0/include -m64 -std=c++11 -pedantic -g -O3 -I. -o dataperf.x dataperf.cpp -L/Users/dcblack/eda/osci/systemc/2.3-clang5.0/lib-macosx64 -lsystemc | c++filt
+% clang++ -arch x86_64 -stdlib=libc++ -I . -DUSING_SYSTEMC=1 -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX -I/Users/dcblack/eda/osci/systemc/2.3-clang5.0/include -m64 -std=c++11 -pedantic -g -O3 -I. -o dataperf.x dataperf.cpp -L/Users/dcblack/eda/osci/systemc/2.3-clang5.0/lib-macosx64 -lsystemc | c++filt
 
 % time ./dataperf.x 
 
