@@ -1,6 +1,6 @@
 // FILE: dataperf.cpp
 //
-// DESCRPTION:
+// DESCRIPTION:
 //
 //   Compare relative performance of data types in SystemC
 //   by creating long loops and performing arithmetic.
