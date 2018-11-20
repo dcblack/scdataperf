@@ -3,11 +3,11 @@
 // DESCRIPTION:
 //
 //   Compare relative performance of data types in SystemC
-//   by creating long loops and performing arithmetic.
+//   by creating long loops and performing operations on the data.
 //
 // LICENSE:
 //
-//   Copyright 2014 David C Black
+//   Copyright 2014,2015 David C Black
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -56,9 +56,9 @@ void truncate<sc_bigint<32>>(sc_bigint<32>& val)
 }
 
 template<typename T>
-void dataperf(void)
+void arithperf(void)
 {
-  cout << "Testing " << typeid(T).name() << " with loop_count=" << loop_count << " " << flush;
+  cout << "Testing arithmetic " << typeid(T).name() << " occupies " << sizeof(T) << " bytes with loop_count=" << loop_count << " " << flush;
   T result =          1;
   T A      = 1103515245; // Linear congruential constants for 32 bit pseudo-random of max length
   T C      =      12345; // result = (A*result + C) & 0xFFFF_FFFF
@@ -66,10 +66,38 @@ void dataperf(void)
   start = chrono::system_clock::now();
   for (size_t loop=loop_count; loop!=0; --loop)
   {
-    result = A * result + C;     // Computation
+    // Compute
+    result = A * result + C;
     truncate<T>(result);
   }
   cout << "result=" << fixed << setprecision(0) << result << " " << flush; // Ensure compiler doesn't optimize loop out
+  current = chrono::system_clock::now();
+  elapsed_seconds = current - start;
+  end_time = chrono::system_clock::to_time_t(current);
+  cout << "elapsed time " << setprecision(6) << elapsed_seconds.count() << "s" << endl;
+}
+
+template<typename T>
+void logicperf(void)
+{
+  cout << "Testing logic " << typeid(T).name() << " occupies " << sizeof(T) << " bytes with loop_count=" << loop_count << " " << flush;
+  size_t tbits = 8*sizeof(T);
+  size_t rbits = 17;
+  size_t lbits = tbits - rbits;
+  T val    =          1;
+  T A      = 1103515245; // Linear congruential constants for 32 bit pseudo-random of max length
+  T C      =      12345; // val    = (A^ror(val,rbits) ^ C) & 0xFFFF_FFFF
+  T rhs, lhs;
+
+  start = chrono::system_clock::now();
+  for (size_t loop=loop_count; loop!=0; --loop)
+  {
+    // Compute
+    rhs = (val >> rbits);
+    lhs = ((rhs << rbits)^val);
+    val = A ^ ((lhs<<lbits)|rhs) ^ C;
+  }
+  cout << "result=" << fixed << setprecision(0) << val << " " << flush; // Ensure compiler doesn't optimize loop out
   current = chrono::system_clock::now();
   elapsed_seconds = current - start;
   end_time = chrono::system_clock::to_time_t(current);
@@ -98,12 +126,20 @@ int sc_main(int argc, char* argv[])
     }//endif
   }
 
-  dataperf<int32_t>();
-  dataperf<sc_int<32>>();
-  dataperf<sc_bigint<32>>();
-  dataperf<double>();
-  dataperf<sc_fixed_fast<32,32>>();
-  dataperf<sc_fixed<32,32>>();
+  arithperf<int32_t>();
+  arithperf<sc_int<32>>();
+  arithperf<sc_bigint<32>>();
+  arithperf<double>();
+  arithperf<sc_fixed_fast<32,32>>();
+  arithperf<sc_fixed<32,32>>();
+
+  cout << endl;
+
+  logicperf<int32_t>();
+  logicperf<sc_int<32>>();
+  logicperf<sc_bigint<32>>();
+  logicperf<sc_lv<32>>();
+  logicperf<sc_bv<32>>();
 
   cout << "\nCompleted all tests" << endl;
   return 0;
