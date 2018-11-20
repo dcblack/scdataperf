@@ -1,23 +1,16 @@
-INVOKED: Tue Jan  7 12:11:30 CST 2014
-DIRECTORY: /Users/dcblack/Dropbox/sandbox/sc_clippings/dataperf
-COMMAND: /Users/dcblack/Dropbox/hldw/bin/qcc -O2 -sc dataperf 1e7
-COMPILER: Apple LLVM version 5.0 (clang-500.2.79) (based on LLVM 3.3svn)
-Target: x86_64-apple-darwin13.0.0
-Thread model: posix
-% clang++ -arch x86_64 -stdlib=libc++  -DUSING_SYSTEMC=1 -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX -I/Users/dcblack/eda/osci/systemc/2.3-clang5.0/include -m64 -std=c++11 -pedantic -g -O2 -I. -o dataperf.x dataperf.cpp -L/Users/dcblack/eda/osci/systemc/2.3-clang5.0/lib-macosx64 -lsystemc | c++filt
-
-% time ./dataperf.sh 1e7
-
-             SystemC 2.3.0-ASI --- Jan  6 2014 07:20:27
-        Copyright (c) 1996-2012 by all Contributors,
+        SystemC 2.3.3_pub_rev_20180904-Accellera --- Sep  6 2018 08:10:12
+        Copyright (char) 1996-2018 by all Contributors,
         ALL RIGHTS RESERVED
+Testing arithmetic int                               occupies  4 bytes with loop_count=100'000'000 result=660469505  elapsed time  0.375165s 
+Testing arithmetic sc_dt::sc_int<32>                 occupies 24 bytes with loop_count=100'000'000 result=660469505  elapsed time  4.546327s 
+Testing arithmetic sc_dt::sc_bigint<32>              occupies 32 bytes with loop_count=100'000'000 result=660469505  elapsed time 45.398435s 
+Testing arithmetic double                            occupies  8 bytes with loop_count=100'000'000 result=4024342528 elapsed time  0.897720s 
+Testing arithmetic sc_dt::sc_fixed_fast<32,32,5,3,0> occupies 48 bytes with loop_count=100'000'000 result=238952512  elapsed time 15.957519s 
+Testing arithmetic sc_dt::sc_fixed<32,32,5,3,0>      occupies 48 bytes with loop_count=100'000'000 result=660469505  elapsed time 81.204259s 
 
-Testing int                               with loop_count=10,000,000 result=1347020161 elapsed time 0.012197s
-Testing sc_dt::sc_int<32>                 with loop_count=10,000,000 result=1347020161 elapsed time 0.023431s
-Testing double                            with loop_count=10,000,000 result=3528416000 elapsed time 0.053269s
-Testing sc_dt::sc_fixed_fast<32,32,5,3,0> with loop_count=10,000,000 result=1173492288 elapsed time 0.903091s
-Testing sc_dt::sc_fixed<32,32,5,3,0>      with loop_count=10,000,000 result=1347020161 elapsed time 4.408203s
-Testing sc_dt::sc_bigint<32>              with loop_count=10,000,000 result=1347020161 elapsed time 4.719127s
+Testing logic int                  occupies  4 bytes with loop_count=100'000'000 result=-1103519416                      elapsed time   0.511632s 
+Testing logic sc_dt::sc_int<32>    occupies 24 bytes with loop_count=100'000'000 result=1103519415                       elapsed time   3.521695s 
+Testing logic sc_dt::sc_bigint<32> occupies 32 bytes with loop_count=100'000'000 result=1103519415                       elapsed time 169.063975s 
+Testing logic sc_dt::sc_lv<32>     occupies 32 bytes with loop_count=100'000'000 result=01000001110001100101111010110111 elapsed time 302.058590s 
+Testing logic sc_dt::sc_bv<32>     occupies 24 bytes with loop_count=100'000'000 result=01000001110001100101111010110111 elapsed time 287.428007s 
 
-Completed all tests
-       10.49 real        10.64 user         0.18 sys
