@@ -53,7 +53,7 @@ void truncate<sc_bigint<32>>(sc_bigint<32>& val)
 }
 
 template<typename T>
-void arithperf(void)
+void arithperf( const std::string& name )
 {
   cout << "Testing arithmetic " << name << " occupies " << sizeof(T) << " bytes with loop_count=" << loop_count << " " << flush;
   T result = 1;
@@ -73,7 +73,7 @@ void arithperf(void)
 }
 
 template<typename T>
-void logicperf(void)
+void logicperf( const std::string& name )
 {
   cout << "Testing logic " << name << " occupies " << sizeof(T) << " bytes with loop_count=" << loop_count << " " << flush;
   size_t tbits = 8*sizeof(T);
