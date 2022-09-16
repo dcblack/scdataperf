@@ -24,7 +24,6 @@
 #include "require_cxx11.h"
 #include <cstdint>
 #include <cmath>
-#include <cassert>
 #include <systemc>
 #include <iostream>
 #include <iomanip>
@@ -88,7 +87,6 @@ void logicperf(void)
   T A      = 1103515245; // Linear congruential constants for 32 bit pseudo-random of max length
   T C      =      12345; // val    = (A^ror(val,rbits) ^ C) & 0xFFFF_FFFF
   T rhs, lhs;
-
   start = chrono::system_clock::now();
   for (size_t loop=loop_count; loop!=0; --loop)
   {
@@ -122,7 +120,7 @@ int sc_main(int argc, char* argv[])
       double d;
       is >> d;
       loop_count = d;
-      assert(loop_count != 0);
+      sc_assert(loop_count != 0);
     }//endif
   }
 
