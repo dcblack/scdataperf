@@ -1,20 +1,20 @@
 #!cmake .
-# This works with SystemV versions 2.3.2 and later, which have support for
+#
+# This works with SystemC versions 2.3.2 and later, which have support for
 # cmake and specify SystemC_CXX_STANDARD.
 # 
 # REQUIREMENTS:
-#   Define SYSTEMC_HOME to point to install directory of SystemC (not source)
+# - Adjust ../../setup.profile if needed
 
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required( VERSION 3.20 )
 
-project(dataperf CXX)
-set(TARGET_EXECUTABLE $<TARGET_FILE_NAME:dataperf>)
-set(TARGET_NAME dataperf)
-set(default_build_type "Debug")
-include(systemc.cmake)
+project( dataperf VERSION 1.2 DESCRIPTION "SystemC data type performance evaluation" LANGUAGES CXX )
 
-add_compile_definitions(SC_INCLUDE_FX SC_INCLUDE_DYNAMIC_PROCESSES)
+list( PREPEND CMAKE_MODULE_PATH "$ENV{PROJECT_DIR}/cmake" )
+include( sc-project_defaults )
 
-add_executable(dataperf
-  dataperf.cpp
-)
+add_executable( "${PROJECT_NAME}" )
+target_sources( "${PROJECT_NAME}" PRIVATE dataperf.cpp )
+add_test( NAME "${PROJECT_NAME}" COMMAND "${PROJECT_NAME}" )
+
+# vim:syntax=cmake:nospell
