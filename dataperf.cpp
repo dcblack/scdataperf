@@ -23,7 +23,6 @@
 
 #include "require_cxx11.h"
 #include <cstdint>
-#include <cmath>
 #include <systemc>
 #include <iostream>
 #include <iomanip>
@@ -31,7 +30,6 @@
 #include <chrono>
 #include <ctime>
 #include <string>
-#include <cstddef>
 
 using namespace std;
 using namespace sc_dt;
@@ -39,7 +37,6 @@ using namespace sc_dt;
 namespace {
   chrono::time_point<chrono::system_clock> start, current;
   chrono::duration<double> elapsed_seconds;
-  time_t end_time;
   size_t loop_count = 1e8;
 }
 
@@ -72,7 +69,6 @@ void arithperf(void)
   cout << "result=" << fixed << setprecision(0) << result << " " << flush; // Ensure compiler doesn't optimize loop out
   current = chrono::system_clock::now();
   elapsed_seconds = current - start;
-  end_time = chrono::system_clock::to_time_t(current);
   cout << "elapsed time " << setprecision(6) << elapsed_seconds.count() << "s" << endl;
 }
 
