@@ -42,13 +42,13 @@ namespace {
 }
 
 template<typename T>
-void truncate(T& val)
+void truncate( [[maybe_unused]] T& val )
 {
-  val = T(uint32_t(val)); // Truncate to 32 bits
+  val = T( uint32_t(val) ); // Truncate to 32 bits
 }
 
 template<>
-void truncate<sc_bigint<32>>(sc_bigint<32>& val)
+void truncate<sc_bigint<32>>( [[maybe_unused]] sc_bigint<32>& val )
 {
 }
 
@@ -64,7 +64,8 @@ void arithperf( const std::string& name )
   for (size_t loop=loop_count; loop!=0; --loop)
   {
     // Compute
-    result = A * result + C;    truncate<T>(result);
+    result = A * result + C;
+    truncate<T>(result);
   }
   cout << "result=" << fixed << setprecision(0) << result << " " << flush; // Ensure compiler doesn't optimize loop out
   current = chrono::system_clock::now();
@@ -83,6 +84,7 @@ void logicperf( const std::string& name )
   T A      = 1103515245; // Linear congruential constants for 32 bit pseudo-random of max length
   T C      =      12345; // val    = (A^ror(val,rbits) ^ C) & 0xFFFF_FFFF
   T rhs, lhs;
+
   start = chrono::system_clock::now();
   for (size_t loop=loop_count; loop!=0; --loop)
   {
@@ -94,7 +96,6 @@ void logicperf( const std::string& name )
   cout << "result=" << fixed << setprecision(0) << val << " " << flush; // Ensure compiler doesn't optimize loop out
   current = chrono::system_clock::now();
   elapsed_seconds = current - start;
-  end_time = chrono::system_clock::to_time_t(current);
   cout << "elapsed time " << setprecision(6) << elapsed_seconds.count() << "s" << endl;
 }
 
@@ -116,7 +117,7 @@ int sc_main(int argc, char* argv[])
       istringstream is(arg);
       double d;
       is >> d;
-      loop_count = d;
+      loop_count = size_t(d);
       sc_assert(loop_count != 0);
     }//endif
   }
