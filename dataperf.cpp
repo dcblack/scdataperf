@@ -54,8 +54,8 @@ void truncate<sc_bigint<32>>(sc_bigint<32>& val)
 template<typename T>
 void arithperf(void)
 {
-  cout << "Testing arithmetic " << typeid(T).name() << " occupies " << sizeof(T) << " bytes with loop_count=" << loop_count << " " << flush;
-  T result =          1;
+  cout << "Testing arithmetic " << name << " occupies " << sizeof(T) << " bytes with loop_count=" << loop_count << " " << flush;
+  T result = 1;
   T A      = 1103515245; // Linear congruential constants for 32 bit pseudo-random of max length
   T C      =      12345; // result = (A*result + C) & 0xFFFF_FFFF
 
@@ -63,8 +63,7 @@ void arithperf(void)
   for (size_t loop=loop_count; loop!=0; --loop)
   {
     // Compute
-    result = A * result + C;
-    truncate<T>(result);
+    result = A * result + C;    truncate<T>(result);
   }
   cout << "result=" << fixed << setprecision(0) << result << " " << flush; // Ensure compiler doesn't optimize loop out
   current = chrono::system_clock::now();
@@ -75,7 +74,7 @@ void arithperf(void)
 template<typename T>
 void logicperf(void)
 {
-  cout << "Testing logic " << typeid(T).name() << " occupies " << sizeof(T) << " bytes with loop_count=" << loop_count << " " << flush;
+  cout << "Testing logic " << name << " occupies " << sizeof(T) << " bytes with loop_count=" << loop_count << " " << flush;
   size_t tbits = 8*sizeof(T);
   size_t rbits = 17;
   size_t lbits = tbits - rbits;
@@ -120,20 +119,21 @@ int sc_main(int argc, char* argv[])
     }//endif
   }
 
-  arithperf<int32_t>();
-  arithperf<sc_int<32>>();
-  arithperf<sc_bigint<32>>();
-  arithperf<double>();
-  arithperf<sc_fixed_fast<32,32>>();
-  arithperf<sc_fixed<32,32>>();
+
+  arithperf< int32_t              >( "int32_t"              );
+  arithperf< sc_int<32>           >( "sc_int<32>"           );
+  arithperf< sc_bigint<32>        >( "sc_bigint<32>"        );
+  arithperf< double               >( "double"               );
+  arithperf< sc_fixed_fast<32,32> >( "sc_fixed_fast<32,32>" );
+  arithperf< sc_fixed<32,32>      >( "sc_fixed<32,32>"      );
 
   cout << endl;
 
-  logicperf<int32_t>();
-  logicperf<sc_int<32>>();
-  logicperf<sc_bigint<32>>();
-  logicperf<sc_lv<32>>();
-  logicperf<sc_bv<32>>();
+  logicperf< int32_t       >( "int32_t"       );
+  logicperf< sc_int<32>    >( "sc_int<32>"    );
+  logicperf< sc_bigint<32> >( "sc_bigint<32>" );
+  logicperf< sc_lv<32>     >( "sc_lv<32>"     );
+  logicperf< sc_bv<32>     >( "sc_bv<32>"     );
 
   cout << "\nCompleted all tests" << endl;
   return 0;
