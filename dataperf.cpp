@@ -33,6 +33,7 @@
 
 using namespace std;
 using namespace sc_dt;
+using namespace std::literals;
 
 namespace {
   chrono::time_point<chrono::system_clock> start, current;
@@ -101,9 +102,10 @@ int sc_main(int argc, char* argv[])
 {
   for (int i=1; i<argc; ++i) { // Process command-line
     string arg(argv[i]);
-    if (arg.length()>1 and string("-help").find(arg) == 0) {
+    if ( arg == "--help" or arg == "-h" ) {
       cout
         << "SYNOPSIS\n"
+        << "  " << argv[0] << " --help\n"
         << "  " << argv[0] << " [LOOP_COUNT]\n"
         << "EXAMPLES\n"
         << "  " << argv[0] << "1e7\n"
