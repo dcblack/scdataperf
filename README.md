@@ -18,4 +18,6 @@ cmake --build build 2>&1 | tee compile.log;
 ctest --test-dir build -V 2>&1 | tee test.log;
 ```
 
+Or use the included `boostrap.bash` script.
+
 Of course, you can also use `gmake`; however, you will need to modify `GNUmakefile` to suit your configuration.
