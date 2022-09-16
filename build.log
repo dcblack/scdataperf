@@ -1,0 +1,10 @@
+# Logfile for build.log created on Fri Sep 16 17:37:22 CDT 2022
+
+% /Users/dcblack/AWS/portable-scripts/.local/bin/build 
+
+--------------------------------------------------------------------------------[00m
+[32m[01mInfo: [00m[00mConfiguring /Users/dcblack/Dropbox/Sandbox/sc_clippings/dataperf[00m
+[36m%[00m [01mcmake -S . -B build -DCMAKE_PREFIX_PATH=/Users/dcblack/Dropbox/Sandbox/sc_clippings/dataperf;/Users/dcblack/Dropbox/Sandbox/sc_clippings/dataperf;/Users/dcblack/.local/apps [00m
+[32m[01mInfo: [00m[00mCompiling /Users/dcblack/Dropbox/Sandbox/sc_clippings/dataperf[00m
+[36m%[00m [01mcmake --build build[00m
+[32m[01mInfo: [00m[00mExecutable is in build/ -- HINT: Next time try adding -test.[00m

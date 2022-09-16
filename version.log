@@ -1,0 +1,6 @@
+Fri Sep 16 18:41:59 CDT 2022
+Darwin Mavros 21.6.0 Darwin Kernel Version 21.6.0: Mon Aug 22 20:19:52 PDT 2022; root:xnu-8020.140.49~2/RELEASE_ARM64_T6000 arm64
+Apple clang version 14.0.0 (clang-1400.0.29.102)
+Target: arm64-apple-darwin21.6.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin

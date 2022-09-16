@@ -1,0 +1,39 @@
+Internal ctest changing into directory: /Users/dcblack/Dropbox/Sandbox/sc_clippings/dataperf/build
+UpdateCTestConfiguration  from :/Users/dcblack/Dropbox/Sandbox/sc_clippings/dataperf/build/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/Users/dcblack/Dropbox/Sandbox/sc_clippings/dataperf/build/DartConfiguration.tcl
+Test project /Users/dcblack/Dropbox/Sandbox/sc_clippings/dataperf/build
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: dataperf
+
+1: Test command: /Users/dcblack/Dropbox/Sandbox/sc_clippings/dataperf/build/dataperf
+1: Working Directory: /Users/dcblack/Dropbox/Sandbox/sc_clippings/dataperf/build
+1: Test timeout computed to be: 10000000
+1: 
+1:         SystemC 2.3.4_pub_rev_20191203-Accellera --- Sep 16 2022 06:01:14
+1:         Copyright (c) 1996-2019 by all Contributors,
+1:         ALL RIGHTS RESERVED
+1: Testing arithmetic int32_t occupies 4 bytes with loop_count=100000000 result=660469505 elapsed time 0.515504s
+1: Testing arithmetic sc_int<32> occupies 24 bytes with loop_count=100000000 result=660469505 elapsed time 2.149865s
+1: Testing arithmetic sc_bigint<32> occupies 32 bytes with loop_count=100000000 result=660469505 elapsed time 16.497782s
+1: Testing arithmetic double occupies 8 bytes with loop_count=100000000 result=4294967295 elapsed time 1.276906s
+1: Testing arithmetic sc_fixed_fast<32,32> occupies 48 bytes with loop_count=100000000 result=0 elapsed time 8.210195s
+1: Testing arithmetic sc_fixed<32,32> occupies 48 bytes with loop_count=100000000 result=0 elapsed time 35.726051s
+1: 
+1: Testing logic int32_t occupies 4 bytes with loop_count=100000000 result=-1103519416 elapsed time 0.511972s
+1: Testing logic sc_int<32> occupies 24 bytes with loop_count=100000000 result=1103519415 elapsed time 2.756009s
+1: Testing logic sc_bigint<32> occupies 32 bytes with loop_count=100000000 result=1103519415 elapsed time 48.366752s
+1: Testing logic sc_lv<32> occupies 32 bytes with loop_count=100000000 result=01000001110001100101111010110111 elapsed time 111.299553s
+1: Testing logic sc_bv<32> occupies 24 bytes with loop_count=100000000 result=01000001110001100101111010110111 elapsed time 109.440920s
+1: 
+1: Completed all tests
+1/1 Test #1: dataperf .........................   Passed  336.75 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) = 336.75 sec
